@@ -9,14 +9,14 @@ Enter the following url: https://github.com/LiveComSollutions/livecom-ios . In t
 ### Install via CocoaPods
 Add the following line to your Podfile
 ```sh
- pod 'LiveComSDK', :git => 'https://github.com/LiveComSollutions/livecom-ios'
+  pod 'LiveComSDK', :podspec => 'https://customers.s3.sbg.io.cloud.ovh.net/ios/latest.podspec'
 ```
 For App Clip target it's necessary to SDK be linked statically. So you can write `use_frameworks! :linkage => :static` globally, or only for App Clip target:
 
 ```
 target 'AppClip' do
   use_frameworks! :linkage => :static
-   pod 'LiveComSDK', :git => 'https://github.com/LiveComSollutions/livecom-ios'
+  pod 'LiveComSDK', :podspec => 'https://customers.s3.sbg.io.cloud.ovh.net/ios/latest.podspec'
 end
 ```
 
@@ -34,13 +34,12 @@ Call  this method as soon as possible. For example, in didFinishLaunchingWithOpt
 import LiveComSDK
 
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let brand = Appearence.AppTheme.Brand(
-          primary: .blue,
-          secondary: .red,
-          gradientFirst: .cyan,
-          gradientSecond: .yellow
+        let theme = Appearence.AppTheme(
+            primary: .blue,
+            secondary: .red,
+            gradientFirst: .cyan,
+            gradientSecond: .yellow
         )
-        let theme = Appearence.AppTheme(brand: brand)
         let appearence = Appearence(theme: theme)
 
         LiveCom.shared.configure(
@@ -87,8 +86,14 @@ LiveCom.shared.presentStream(withId: streamId)
 
 ## Custom Checkout and Product screens
 It is possible to display your own screens for product and checkout.
-Just implement following methods in your LiveComDelegate:
+Return true in  infollowing methods and present your own controllers in your LiveComDelegate:
 ```sh
-func productController(forSKU productSKU: String) -> UIViewController?
-func checkoutController(forSKUs productSKUs: [String]) -> UIViewController?
+func userDidRequestOpenProductScreen(
+    forSKU productSKU: String,
+    presenting presentingViewController: UIViewController
+) -> Bool
+func userDidRequestOpenCheckoutScreen(
+    productSKUs: [String],
+    presenting presentingViewController: UIViewController
+) -> Bool
 ```
