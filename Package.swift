@@ -23,8 +23,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "LiveComSDK",
-            url: "https://customers.livecom.tech/ios/1.0.6/LiveComSDK.xcframework.zip",
-            checksum: "33a4187f1aab1ae4798fe978353d9ff702f845017db6535a7120d0de1a541860"
+            url: "https://customers.livecom.tech/ios/1.1.0/LiveComSDK.xcframework.zip",
+            checksum: "4854840ad8fe3721df883d8f4a07a9fa78f69451b2e54cab4a9fe7caffdfe40a"
         ),
         .target(
             name: "LiveComSDKWrapper",
